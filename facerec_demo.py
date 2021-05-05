@@ -31,12 +31,9 @@ video_capture = cv2.VideoCapture(0)
 #     "Barack Obama",
 #     "Joe Biden"
 # ]
-
+min_threshold = 0.5
 def on_trackbar(val):
-    alpha = val / alpha_slider_max
-    beta = ( 1.0 - alpha )
-    dst = cv.addWeighted(src1, alpha, src2, beta, 0.0)
-    cv.imshow(title_window, dst)
+    min_threshold = float(val/100)
 path = 'db'
 files = os.listdir(path)
 known_face_encodings = []
@@ -44,6 +41,9 @@ known_face_names = []
 cv2.namedWindow("facerec")
 trackbar_name = "threshold"
 cv2.createTrackbar(trackbar_name, "facerec" , 0, 100, on_trackbar)
+#set default trackbar.
+cv2.setTrackbarPos(trackbar_name, "facerec", 50)
+current_value = 0
 for f in files:
     abs_filepath = path +"/"+f
     extension = f.split(".")[1]
@@ -95,6 +95,8 @@ while True:
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
                 current_value = face_distances[best_match_index]
+                if current_value > min_threshold:
+                    name = "Unknown"
             face_names.append(name)
 
     process_this_frame = not process_this_frame
@@ -107,9 +109,12 @@ while True:
         right *= 4
         bottom *= 4
         left *= 4
-
+        if current_value > min_threshold:
+            color = (0,0,255)
+        else:
+            color = (0,255,0)    
         # Draw a box around the face
-        cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
+        cv2.rectangle(frame, (left, top), (right, bottom), color, 2)
 
         # Draw a label with a name below the face
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
