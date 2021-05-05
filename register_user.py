@@ -4,12 +4,12 @@ import numpy as np
 video_capture = cv2.VideoCapture(0)
 capture = False
 counter = 0
+cv2.namedWindow('current_frame')
 while True:
     ret, frame = video_capture.read()
-    #cv2.namedWindow('Object Tracker')
     cv2.imshow("current_frame",frame)
     counter = counter +1
-    key = cv2.waitKey(1)
+    key = cv2.waitKey(30)
     if key == 27:
         break
     if key == 82 or key == 115:

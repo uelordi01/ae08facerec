@@ -8,8 +8,11 @@ while True:
     if face_locations:
         cv2.rectangle(frame, (face_locations[0][3], face_locations[0][0]), (face_locations[0][1], face_locations[0][2]), (255,0,0), 2)
     cv2.imshow("face_detection",frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    key = cv2.waitKey(1)
+    if key == 27:
         break
+    #if cv2.waitKey(1) & 0xFF == ord('q'):
+    #    break
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()
