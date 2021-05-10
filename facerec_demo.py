@@ -5,21 +5,24 @@ import os
 
 video_capture = cv2.VideoCapture(0)
 
-min_threshold = 0.5
+global min_threshold
+
 def on_trackbar(val):
-    min_threshold = float(val/100)
+    min_threshold = float(val / 100)
+
+min_threshold = 0.5
 path = 'db'
 files = os.listdir(path)
 known_face_encodings = []
 known_face_names = []
 cv2.namedWindow("facerec")
 trackbar_name = "threshold"
-cv2.createTrackbar(trackbar_name, "facerec" , 0, 100, on_trackbar)
-#set default trackbar.
+cv2.createTrackbar(trackbar_name, "facerec", 0, 100, on_trackbar)
+# set default trackbar.
 cv2.setTrackbarPos(trackbar_name, "facerec", 50)
 current_value = 0
 for f in files:
-    abs_filepath = path +"/"+f
+    abs_filepath = path + "/" + f
     extension = f.split(".")[1]
     if extension == "jpg":
         print("getting the encoding of {}".format(f))
@@ -48,7 +51,7 @@ while True:
     # Only process every other frame of video to save time
     if process_this_frame:
         # Find all the faces and face encodings in the current frame of video
-        face_locations = face_recognition.face_locations(rgb_small_frame)
+        face_locations = face_recognition.face_locations(rgb_small_frame, model="hog")
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
         face_names = []
@@ -69,12 +72,12 @@ while True:
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
                 current_value = face_distances[best_match_index]
+                min_threshold = float(cv2.getTrackbarPos(trackbar_name, "facerec")/100)
                 if current_value > min_threshold:
                     name = "Unknown"
             face_names.append(name)
 
     process_this_frame = not process_this_frame
-
 
     # Display the results
     for (top, right, bottom, left), name in zip(face_locations, face_names):
@@ -84,16 +87,16 @@ while True:
         bottom *= 4
         left *= 4
         if current_value > min_threshold:
-            color = (0,0,255)
+            color = (0, 0, 255)
         else:
-            color = (0,255,0)    
-        # Draw a box around the face
+            color = (0, 255, 0)
+            # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), color, 2)
 
         # Draw a label with a name below the face
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), color, cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
-        name = name + " " + str(round(current_value,2))
+        name = name + " " + str(round(current_value, 2))
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 0.5, (255, 255, 255), 1)
 
     # Display the resulting image
@@ -102,9 +105,10 @@ while True:
     if key == 27:
         break
     # Hit 'q' on the keyboard to quit!
-    #if cv2.waitKey(1) & 0xFF == ord('q'):
-     #   break
+    # if cv2.waitKey(1) & 0xFF == ord('q'):
+    #   break
 
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()
+
