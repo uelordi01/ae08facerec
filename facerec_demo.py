@@ -86,7 +86,7 @@ while True:
         right *= 4
         bottom *= 4
         left *= 4
-        if current_value > min_threshold:
+        if current_value > min_threshold or name == "Unknown":
             color = (0, 0, 255)
         else:
             color = (0, 255, 0)

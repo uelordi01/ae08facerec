@@ -1,0 +1,6 @@
+dlib
+facerec
+numpy
+opencv-python
+Pillow
+click
