@@ -9,7 +9,7 @@ Kode errepositorio hau Araba Encounter 08an emandako tailerrari dagokio.
 Aurpegiaren ezagutzak, bere oinarrian, bektore biometrikoak konparatzean du helburu.
 Horretarako, 2 irudi behar ditugu, Erregistratua (erregistratutako bektore biometrikoa) eta ezagutu beharreko irudia.
 
-![Facerec_process](img/facerec_process_eus.png "aurpegiak ezagutzeko prozesua")
+![Facerec_process](img/Facerec_process_eus.png "aurpegiak ezagutzeko prozesua")
 
 - **Aurpegiak detektatzea:** aurpegiaren posizioa espazioan (X,Y) bilatzean datza,
  webcameko irudia kontutan hartuta.
