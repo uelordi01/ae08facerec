@@ -1,6 +1,6 @@
 # Montatu zure aurpegi ezagutzaren sistema 80 euro baino gutxiagoren truke.
 Kode errepositorio hau Araba Encounter 08an emandako tailerrari dagokio.
-
+Instrucciones en castellano [aquí](https://github.com/uelordi01/ae08facerec/blob/main/tutorial_cas.md)
 ## Zer hardware behar dugu  aurpegi ezagutzaren sistema instalatzeko?
 - Raspberry Pi 3 model b+ (ordenagailu eramangarri bat ere erabil daiteke)
 - Kamera bat (USB bidez doan edozein webcam).
@@ -56,10 +56,10 @@ Raspberry Pi-rako:
 ```
 
 ## webcametik irudiak hartzea
-Adibidea camera_capture.py-an agertzen da.
+Adibidea **camera_capture.py**-an agertzen da.
 
 ```Python
-Python3 camera_cape.py
+Python3 camera_capture.py
 ```
 
 Kodea:
